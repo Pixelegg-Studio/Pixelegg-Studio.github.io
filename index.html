@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,81 +7,343 @@
 
     <link rel="icon" type="image/png" href="/images/favicon.png">
 
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts for Cute Typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        cozy: {
-                            bg: '#FAF7F2',
-                            card: '#FFFFFF',
-                            text: '#2C2A29',
-                            muted: '#7A7571',
-                            border: '#EFEAE1',
-                            honey: '#FFF5E6',
-                            honeyBorder: '#FDE4C3',
-                            honeyAccent: '#D97706',
-                            sage: '#F0F7F4',
-                            sageBorder: '#D2E8DD',
-                            sageAccent: '#059669',
-                            sky: '#F0F5FE',
-                            skyBorder: '#D3E3FD',
-                            skyAccent: '#2563EB',
-                            blush: '#FFF0F3'
-                        }
-                    },
-                    fontFamily: {
-                        sans: ['Plus Jakarta Sans', '-apple-system', 'sans-serif'],
-                        cute: ['Fredoka', 'Plus Jakarta Sans', 'sans-serif']
-                    },
-                    animation: {
-                        'float': 'float 6s ease-in-out infinite',
-                        'float-delayed': 'float 7s ease-in-out 2s infinite',
-                        'wobble': 'wobble 0.8s ease-in-out',
-                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite'
-                    },
-                    keyframes: {
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
-                            '50%': { transform: 'translateY(-10px) rotate(2deg)' }
-                        },
-                        wobble: {
-                            '0%, 100%': { transform: 'rotate(0deg) scale(1)' },
-                            '15%': { transform: 'rotate(-12deg) scale(1.08)' },
-                            '30%': { transform: 'rotate(10deg) scale(1.08)' },
-                            '45%': { transform: 'rotate(-6deg) scale(1.04)' },
-                            '60%': { transform: 'rotate(4deg) scale(1.02)' }
-                        }
-                    }
-                }
-            }
-        }
-    </script>
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
+
     <style>
+        :root {
+            --bg-main: #FAF7F2;
+            --card-bg: #FFFFFF;
+            --cozy-text: #2C2A29;
+            --cozy-muted: #7A7571;
+            --cozy-border: #EFEAE1;
+            
+            --honey-bg: #FFF5E6;
+            --honey-border: #FDE4C3;
+            --honey-accent: #D97706;
+            --honey-badge-bg: #FEF3C7;
+            --honey-badge-text: #92400E;
+            --honey-btn-hover: #B45309;
+
+            --sage-bg: #F0F7F4;
+            --sage-border: #D2E8DD;
+            --sage-accent: #059669;
+            --sage-badge-bg: #D1FAE5;
+            --sage-badge-text: #065F46;
+            --sage-btn-hover: #047857;
+
+            --sky-bg: #F0F5FE;
+            --sky-border: #D3E3FD;
+            --sky-accent: #2563EB;
+            --sky-badge-bg: #DBEAFE;
+            --sky-badge-text: #1E40AF;
+            --sky-btn-hover: #1D4ED8;
+
+            --font-sans: 'Plus Jakarta Sans', -apple-system, sans-serif;
+            --font-cute: 'Fredoka', 'Plus Jakarta Sans', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
-            background-color: #FAF7F2;
+            background-color: var(--bg-main);
             background-image: radial-gradient(#E8E2D8 1px, transparent 1px);
             background-size: 24px 24px;
+            color: var(--cozy-text);
+            font-family: var(--font-sans);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
         }
-        
-        .cute-card {
-            transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+        ::selection {
+            background-color: #FEF3C7;
+            color: #78350F;
         }
-        
-        .cute-card:hover {
-            transform: translateY(-8px) rotate(-0.5deg);
+
+        /* Ambient Blobs */
+        .ambient-blob {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(48px);
+            pointer-events: none;
+            z-index: 0;
+        }
+        .blob-1 {
+            top: 3rem;
+            left: -3.75rem;
+            width: 18rem;
+            height: 18rem;
+            background-color: rgba(253, 230, 138, 0.3);
+            animation: float 6s ease-in-out infinite;
+        }
+        .blob-2 {
+            top: 24rem;
+            right: -5rem;
+            width: 24rem;
+            height: 24rem;
+            background-color: rgba(167, 243, 208, 0.25);
+            animation: float 7s ease-in-out 2s infinite;
+        }
+        .blob-3 {
+            bottom: 5rem;
+            left: 33%;
+            width: 20rem;
+            height: 20rem;
+            background-color: rgba(191, 219, 254, 0.2);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* Layout Container */
+        .container {
+            max-width: 56rem;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            width: 100%;
+        }
+
+        /* Header & Navigation */
+        .glass-nav {
+            position: sticky;
+            top: 0;
+            z-index: 40;
+            width: 100%;
+            background: rgba(250, 247, 242, 0.85);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-bottom: 1px solid rgba(239, 234, 225, 0.7);
+        }
+
+        .nav-content {
+            height: 4rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .brand-link {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            padding: 0.5rem 0;
+        }
+
+        .brand-icon {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 1rem;
+            background-color: rgba(251, 191, 36, 0.2);
+            border: 1px solid rgba(252, 211, 77, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .brand-link:hover .brand-icon {
+            transform: scale(1.1) rotate(6deg);
+        }
+
+        .brand-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .brand-title {
+            font-family: var(--font-cute);
+            font-weight: 700;
+            font-size: 1.125rem;
+            letter-spacing: -0.025em;
+            color: var(--cozy-text);
+            line-height: 1.2;
+        }
+
+        .brand-subtitle {
+            font-size: 10px;
+            font-family: monospace;
+            color: var(--cozy-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+        }
+
+        .nav-links a {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--cozy-muted);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--cozy-text);
+        }
+
+        /* Main Content */
+        main {
+            flex-grow: 1;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            padding-top: 4rem;
+            padding-bottom: 4rem;
+            text-align: center;
+        }
+
+        .mascot-wrapper {
+            display: inline-block;
+            position: relative;
+            cursor: pointer;
+            margin-bottom: 1.5rem;
+        }
+
+        .egg-container {
+            width: 7rem;
+            height: 7rem;
+            margin: 0 auto;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        @media (min-width: 640px) {
+            .egg-container {
+                width: 8rem;
+                height: 8rem;
+            }
+        }
+
+        .egg-svg {
+            width: 100%;
+            height: 100%;
+            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.07));
+        }
+
+        .speech-bubble {
+            position: absolute;
+            top: -0.75rem;
+            right: -1.5rem;
+            background-color: #FFFFFF;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            border: 1px solid var(--cozy-border);
+            font-size: 11px;
+            font-family: var(--font-cute);
+            font-weight: 600;
+            color: #92400E;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            opacity: 0.9;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .speech-bubble.scale-110 {
+            transform: scale(1.1);
+        }
+
+        .badge-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.375rem;
+            padding: 0.375rem 1rem;
+            border-radius: 9999px;
+            background-color: #FFFFFF;
+            border: 1px solid rgba(253, 230, 138, 0.8);
+            font-size: 0.75rem;
+            font-family: var(--font-cute);
+            font-weight: 600;
+            color: #92400E;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+            margin-bottom: 1rem;
+        }
+
+        .ping-dot {
+            width: 0.375rem;
+            height: 0.375rem;
+            border-radius: 50%;
+            background-color: #F59E0B;
+            animation: ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;
+        }
+
+        .hero-title {
+            font-family: var(--font-cute);
+            font-size: 2.25rem;
+            font-weight: 700;
+            letter-spacing: -0.025em;
+            color: var(--cozy-text);
+            max-width: 42rem;
+            margin: 0 auto;
+            line-height: 1.25;
+        }
+
+        @media (min-width: 640px) {
+            .hero-title {
+                font-size: 3rem;
+            }
+        }
+
+        .hero-subtitle {
+            margin-top: 1rem;
+            font-size: 1rem;
+            color: var(--cozy-muted);
+            max-width: 36rem;
+            margin-left: auto;
+            margin-right: auto;
+            font-weight: 500;
+            line-height: 1.625;
+        }
+
+        @media (min-width: 640px) {
+            .hero-subtitle {
+                font-size: 1.125rem;
+            }
+        }
+
+        .sticker-row {
+            margin-top: 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
         }
 
         .sticker-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 0.75rem;
+            font-size: 0.75rem;
+            font-family: var(--font-cute);
+            font-weight: 500;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
             transition: transform 0.2s ease;
         }
 
@@ -89,28 +351,558 @@
             transform: scale(1.1) rotate(3deg);
         }
 
-        .glass-nav {
-            background: rgba(250, 247, 242, 0.85);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
+        .sticker-amber {
+            background-color: #FFFBEB;
+            border: 1px solid rgba(253, 230, 138, 0.6);
+            color: #78350F;
+        }
+
+        .sticker-emerald {
+            background-color: #ECFDF5;
+            border: 1px solid rgba(167, 243, 208, 0.6);
+            color: #064E3B;
+        }
+
+        .sticker-blue {
+            background-color: #EFF6FF;
+            border: 1px solid rgba(191, 219, 254, 0.6);
+            color: #1E3A8A;
+        }
+
+        /* App Showcase Section */
+        .apps-section {
+            padding-top: 2rem;
+            padding-bottom: 2rem;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--cozy-border);
+        }
+
+        .section-title-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section-title-group h2 {
+            font-family: var(--font-cute);
+            font-weight: 700;
+            font-size: 1.25rem;
+            letter-spacing: -0.025em;
+            color: var(--cozy-text);
+        }
+
+        .count-badge {
+            font-size: 0.75rem;
+            font-family: monospace;
+            font-weight: 500;
+            color: var(--cozy-muted);
+            background-color: #FFFFFF;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            border: 1px solid var(--cozy-border);
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        .apps-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .apps-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        /* Cards */
+        .cute-card {
+            background-color: #FFFFFF;
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .cute-card:hover {
+            transform: translateY(-8px) rotate(-0.5deg);
+        }
+
+        .card-blur-bg {
+            position: absolute;
+            top: -3rem;
+            right: -3rem;
+            width: 7rem;
+            height: 7rem;
+            border-radius: 50%;
+            filter: blur(16px);
+            pointer-events: none;
+        }
+
+        .card-honey { border: 1px solid var(--honey-border); }
+        .card-honey .card-blur-bg { background-color: rgba(254, 243, 199, 0.6); }
+
+        .card-sage { border: 1px solid var(--sage-border); }
+        .card-sage .card-blur-bg { background-color: rgba(209, 250, 229, 0.6); }
+
+        .card-sky { border: 1px solid var(--sky-border); }
+        .card-sky .card-blur-bg { background-color: rgba(219, 234, 254, 0.6); }
+
+        .card-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .app-icon-wrapper {
+            width: 3rem;
+            height: 3rem;
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        .icon-honey { background-color: var(--honey-bg); border: 1px solid #FDE68A; color: var(--honey-accent); }
+        .icon-sage { background-color: var(--sage-bg); border: 1px solid #A7F3D0; color: var(--sage-accent); }
+        .icon-sky { background-color: var(--sky-bg); border: 1px solid #BFDBFE; color: var(--sky-accent); }
+
+        .app-category-badge {
+            font-size: 11px;
+            font-family: var(--font-cute);
+            font-weight: 700;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+        }
+
+        .badge-honey { background-color: var(--honey-badge-bg); color: var(--honey-badge-text); }
+        .badge-sage { background-color: var(--sage-badge-bg); color: var(--sage-badge-text); }
+        .badge-sky { background-color: var(--sky-badge-bg); color: var(--sky-badge-text); }
+
+        .card-title {
+            font-family: var(--font-cute);
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--cozy-text);
+            letter-spacing: -0.025em;
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+        }
+
+        .card-subtitle {
+            font-size: 0.75rem;
+            font-weight: 500;
+            margin-top: 0.25rem;
+        }
+
+        .sub-honey { color: #B45309; }
+        .sub-sage { color: #047857; }
+        .sub-sky { color: #1D4ED8; }
+
+        .card-description {
+            font-size: 0.75rem;
+            color: var(--cozy-muted);
+            margin-top: 0.75rem;
+            line-height: 1.625;
+        }
+
+        .card-footer {
+            margin-top: 2rem;
+            padding-top: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .footer-honey { border-top: 1px solid rgba(254, 243, 199, 0.8); }
+        .footer-sage { border-top: 1px solid rgba(209, 250, 229, 0.8); }
+        .footer-sky { border-top: 1px solid rgba(219, 234, 254, 0.8); }
+
+        .peek-btn {
+            background: none;
+            border: none;
+            font-size: 0.75rem;
+            font-family: var(--font-cute);
+            font-weight: 600;
+            color: var(--cozy-muted);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            transition: color 0.2s ease;
+        }
+
+        .card-honey .peek-btn:hover { color: #92400E; }
+        .card-sage .peek-btn:hover { color: #065F46; }
+        .card-sky .peek-btn:hover { color: #1E40AF; }
+
+        .open-btn {
+            padding: 0.375rem 0.875rem;
+            border-radius: 0.75rem;
+            color: #FFFFFF;
+            font-family: var(--font-cute);
+            font-weight: 600;
+            font-size: 0.75rem;
+            text-decoration: none;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            transition: all 0.2s ease;
+        }
+
+        .cute-card:hover .open-btn {
+            transform: scale(1.05);
+        }
+
+        .btn-honey { background-color: var(--honey-accent); }
+        .btn-honey:hover { background-color: var(--honey-btn-hover); }
+
+        .btn-sage { background-color: var(--sage-accent); }
+        .btn-sage:hover { background-color: var(--sage-btn-hover); }
+
+        .btn-sky { background-color: var(--sky-accent); }
+        .btn-sky:hover { background-color: var(--sky-btn-hover); }
+
+        /* Manifesto Banner Section */
+        .manifesto-section {
+            padding-top: 3rem;
+            padding-bottom: 3rem;
+        }
+
+        .manifesto-card {
+            background-color: #FFFFFF;
+            border: 1px solid var(--cozy-border);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        @media (min-width: 640px) {
+            .manifesto-card {
+                padding: 2.5rem;
+            }
+        }
+
+        .manifesto-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        @media (min-width: 640px) {
+            .manifesto-content {
+                flex-direction: row;
+            }
+        }
+
+        .manifesto-icon {
+            width: 4rem;
+            height: 4rem;
+            border-radius: 1rem;
+            background-color: #FEF3C7;
+            border: 1px solid #FDE68A;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #92400E;
+            font-size: 1.5rem;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        .manifesto-text h3 {
+            font-family: var(--font-cute);
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: var(--cozy-text);
+        }
+
+        .manifesto-text p {
+            font-size: 0.75rem;
+            color: var(--cozy-muted);
+            margin-top: 0.5rem;
+            line-height: 1.625;
+        }
+
+        @media (min-width: 640px) {
+            .manifesto-text p {
+                font-size: 0.875rem;
+            }
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--cozy-border);
+            background-color: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            position: relative;
+            z-index: 10;
+        }
+
+        .footer-content {
+            padding-top: 2rem;
+            padding-bottom: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--cozy-muted);
+        }
+
+        @media (min-width: 640px) {
+            .footer-content {
+                flex-direction: row;
+            }
+        }
+
+        .footer-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .footer-links {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+        }
+
+        .footer-links a {
+            color: var(--cozy-muted);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--cozy-text);
+        }
+
+        /* Preview Modal */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 50;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            background-color: rgba(28, 25, 23, 0.25);
+            backdrop-filter: blur(4px);
+            opacity: 1;
+            transition: opacity 0.2s ease;
+        }
+
+        .modal-overlay.hidden {
+            display: none;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .modal-card {
+            background-color: #FFFFFF;
+            border-radius: 1.5rem;
+            border: 1px solid var(--cozy-border);
+            max-width: 28rem;
+            width: 100%;
+            padding: 1.5rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            position: relative;
+            animation: modalIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .modal-close-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            color: var(--cozy-muted);
+            background: none;
+            border: none;
+            padding: 0.375rem;
+            border-radius: 9999px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+
+        .modal-close-btn:hover {
+            color: var(--cozy-text);
+            background-color: #F5F5F4;
+        }
+
+        .modal-header {
+            margin-bottom: 1rem;
+        }
+
+        .modal-header h3 {
+            font-family: var(--font-cute);
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--cozy-text);
+            margin-top: 0.5rem;
+        }
+
+        .modal-section {
+            margin-top: 1.25rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .modal-section-title {
+            font-size: 0.75rem;
+            font-family: var(--font-cute);
+            font-weight: 700;
+            color: var(--cozy-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .modal-highlights {
+            margin-top: 0.625rem;
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .modal-highlights li {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--cozy-text);
+        }
+
+        .check-bullet {
+            width: 1rem;
+            height: 1rem;
+            border-radius: 50%;
+            background-color: #F5F5F4;
+            color: var(--sage-accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 10px;
+            flex-shrink: 0;
+        }
+
+        .modal-footer {
+            padding-top: 1rem;
+            border-top: 1px solid #F5F5F4;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 0.625rem;
+        }
+
+        .modal-cancel-btn {
+            padding: 0.5rem 1rem;
+            border-radius: 0.75rem;
+            font-size: 0.75rem;
+            font-family: var(--font-cute);
+            font-weight: 600;
+            color: var(--cozy-muted);
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .modal-cancel-btn:hover {
+            background-color: #F5F5F4;
+        }
+
+        .modal-action-btn {
+            padding: 0.5rem 1rem;
+            border-radius: 0.75rem;
+            color: #FFFFFF;
+            font-size: 0.75rem;
+            font-family: var(--font-cute);
+            font-weight: 600;
+            text-decoration: none;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+            transition: all 0.2s ease;
+        }
+
+        /* Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(2deg); }
+        }
+
+        @keyframes wobble {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            15% { transform: rotate(-12deg) scale(1.08); }
+            30% { transform: rotate(10deg) scale(1.08); }
+            45% { transform: rotate(-6deg) scale(1.04); }
+            60% { transform: rotate(4deg) scale(1.02); }
+        }
+
+        @keyframes ping {
+            75%, 100% {
+                transform: scale(2);
+                opacity: 0;
+            }
+        }
+
+        @keyframes modalIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .animate-wobble {
+            animation: wobble 0.8s ease-in-out;
         }
     </style>
 </head>
-<body class="text-cozy-text font-sans antialiased selection:bg-amber-100 selection:text-amber-900 min-h-screen flex flex-col justify-between relative overflow-x-hidden">
+<body>
 
     <!-- Ambient Cute Floating Background Blobs -->
-    <div class="fixed top-12 left-[-60px] w-72 h-72 bg-amber-200/30 rounded-full blur-3xl pointer-events-none animate-float"></div>
-    <div class="fixed top-96 right-[-80px] w-96 h-96 bg-emerald-200/25 rounded-full blur-3xl pointer-events-none animate-float-delayed"></div>
-    <div class="fixed bottom-20 left-1/3 w-80 h-80 bg-blue-200/20 rounded-full blur-3xl pointer-events-none animate-float"></div>
+    <div class="ambient-blob blob-1"></div>
+    <div class="ambient-blob blob-2"></div>
+    <div class="ambient-blob blob-3"></div>
 
     <!-- Navigation Header -->
-    <header class="sticky top-0 z-40 w-full glass-nav border-b border-cozy-border/70">
-        <div class="max-w-4xl mx-auto px-6 h-16 flex items-center justify-between">
+    <header class="glass-nav">
+        <div class="container nav-content">
             <!-- Studio Brand -->
-            <a href="#" class="flex items-center gap-3 group py-2">
-                <div class="w-10 h-10 rounded-2xl bg-amber-400/20 border border-amber-300/50 flex items-center justify-center text-amber-700 shadow-sm transition-transform group-hover:scale-110 group-hover:rotate-6">
+            <a href="#" class="brand-link">
+                <div class="brand-icon">
                     <!-- Egg Icon -->
-                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none">
+                    <svg style="width:1.5rem; height:1.5rem;" viewBox="0 0 24 24" fill="none">
                         <ellipse cx="12" cy="13" rx="7" ry="8.5" fill="#FDE68A" stroke="#D97706" stroke-width="2"/>
                         <circle cx="10" cy="11.5" r="1" fill="#78350F" />
                         <circle cx="14" cy="11.5" r="1" fill="#78350F" />
@@ -119,29 +911,29 @@
                         <ellipse cx="15" cy="13" rx="1" ry="0.6" fill="#F87171" opacity="0.6"/>
                     </svg>
                 </div>
-                <div class="flex flex-col">
-                    <span class="font-cute font-bold text-lg tracking-tight text-cozy-text leading-tight">Pixel Egg</span>
-                    <span class="text-[10px] font-mono text-cozy-muted uppercase tracking-wider">Indie App Studio</span>
+                <div class="brand-text">
+                    <span class="brand-title">Pixel Egg</span>
+                    <span class="brand-subtitle">Indie App Studio</span>
                 </div>
             </a>
 
             <!-- Navigation Links -->
-            <nav class="flex items-center gap-5 text-sm font-medium">
-                <a href="#apps" class="text-cozy-muted hover:text-cozy-text transition-colors">Apps</a>
-                <a href="#philosophy" class="text-cozy-muted hover:text-cozy-text transition-colors">About</a>
+            <nav class="nav-links">
+                <a href="#apps">Apps</a>
+                <a href="#philosophy">About</a>
             </nav>
         </div>
     </header>
 
-    <main class="flex-grow">
+    <main>
         <!-- Cute Hero Section -->
-        <section class="max-w-4xl mx-auto px-6 pt-16 pb-16 text-center relative">
+        <section class="container hero-section">
             
             <!-- Interactive Cute Pixel Egg Mascot -->
-            <div class="inline-block relative cursor-pointer mb-6 group" onclick="wobbleEgg()" title="Click me for a smile! 🐣">
-                <div id="eggContainer" class="w-28 h-28 sm:w-32 sm:h-32 mx-auto relative transition-transform duration-300">
+            <div class="mascot-wrapper" onclick="wobbleEgg()" title="Click me for a smile! 🐣">
+                <div id="eggContainer" class="egg-container">
                     <!-- SVG Mascot -->
-                    <svg viewBox="0 0 100 120" class="w-full h-full filter drop-shadow-md">
+                    <svg viewBox="0 0 100 120" class="egg-svg">
                         <!-- Shadow -->
                         <ellipse cx="50" cy="112" rx="32" ry="6" fill="#E5DEC9" />
                         <!-- Egg Body -->
@@ -165,153 +957,153 @@
                     </svg>
                 </div>
                 <!-- Speech Bubble on Mascot -->
-                <div id="eggSpeech" class="absolute -top-3 -right-6 bg-white px-3 py-1 rounded-full border border-cozy-border text-[11px] font-cute font-semibold text-amber-800 shadow-sm opacity-90 transition-all duration-300">
+                <div id="eggSpeech" class="speech-bubble">
                     Click me! 🐣
                 </div>
             </div>
 
             <!-- Freshly Baked Badge -->
-            <div class="flex items-center justify-center gap-2 mb-4">
-                <span class="px-4 py-1.5 rounded-full bg-white border border-amber-200/80 text-xs font-cute font-semibold text-amber-800 shadow-sm flex items-center gap-1.5">
+            <div>
+                <span class="badge-pill">
                     <span>✨ Handcrafted for macOS</span>
-                    <span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-ping"></span>
+                    <span class="ping-dot"></span>
                 </span>
             </div>
 
             <!-- Hero Title -->
-            <h1 class="text-4xl sm:text-5xl font-cute font-bold tracking-tight text-cozy-text max-w-2xl mx-auto leading-tight">
+            <h1 class="hero-title">
                 Cozy, distraction-free desktop software.
             </h1>
 
             <!-- Hero Subtitle -->
-            <p class="mt-4 text-base sm:text-lg text-cozy-muted max-w-xl mx-auto font-medium leading-relaxed">
+            <p class="hero-subtitle">
                 Small, dedicated utilities crafted with care for music practice, warm sound design, and clean audio capture.
             </p>
 
             <!-- Cute Feature Stickers Row -->
-            <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
-                <span class="sticker-badge px-3 py-1 rounded-xl bg-amber-50 border border-amber-200/60 text-xs font-cute font-medium text-amber-900 shadow-sm flex items-center gap-1.5">
+            <div class="sticker-row">
+                <span class="sticker-badge sticker-amber">
                     <span>🧸 Soft & Minimal</span>
                 </span>
-                <span class="sticker-badge px-3 py-1 rounded-xl bg-emerald-50 border border-emerald-200/60 text-xs font-cute font-medium text-emerald-900 shadow-sm flex items-center gap-1.5">
+                <span class="sticker-badge sticker-emerald">
                     <span> Silicon & Intel Macs</span>
                 </span>
-                <span class="sticker-badge px-3 py-1 rounded-xl bg-blue-50 border border-blue-200/60 text-xs font-cute font-medium text-blue-900 shadow-sm flex items-center gap-1.5">
+                <span class="sticker-badge sticker-blue">
                     <span>⚡️ Zero Trackers</span>
                 </span>
             </div>
         </section>
 
         <!-- Cute Apps Showcase Section -->
-        <section id="apps" class="max-w-4xl mx-auto px-6 py-8">
-            <div class="flex items-center justify-between mb-8 pb-3 border-b border-cozy-border">
-                <div class="flex items-center gap-2">
-                    <span class="text-xl">🥞</span>
-                    <h2 class="font-cute font-bold text-xl tracking-tight text-cozy-text">The App Suite</h2>
+        <section id="apps" class="container apps-section">
+            <div class="section-header">
+                <div class="section-title-group">
+                    <span style="font-size:1.25rem;">🥞</span>
+                    <h2>The App Suite</h2>
                 </div>
-                <span class="text-xs font-mono font-medium text-cozy-muted bg-white px-3 py-1 rounded-full border border-cozy-border shadow-sm">3 Indie Utilities</span>
+                <span class="count-badge">3 Indie Utilities</span>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="apps-grid">
 
                 <!-- APP 1: HONEYTONE -->
-                <article class="cute-card bg-white rounded-3xl border border-cozy-honeyBorder p-6 flex flex-col justify-between shadow-md relative overflow-hidden group">
-                    <div class="absolute -top-12 -right-12 w-28 h-28 bg-amber-100/60 rounded-full blur-xl pointer-events-none"></div>
+                <article class="cute-card card-honey">
+                    <div class="card-blur-bg"></div>
                     <div>
-                        <div class="flex items-start justify-between mb-4">
-                            <div class="w-12 h-12 rounded-2xl bg-cozy-honey border border-amber-200 flex items-center justify-center text-amber-700 shadow-sm">
-                                <i data-lucide="sun" class="w-6 h-6 text-amber-600"></i>
+                        <div class="card-header">
+                            <div class="app-icon-wrapper icon-honey">
+                                <i data-lucide="sun" style="width:1.5rem; height:1.5rem;"></i>
                             </div>
-                            <span class="text-[11px] font-cute font-bold px-3 py-1 rounded-full bg-amber-100 text-amber-800">
+                            <span class="app-category-badge badge-honey">
                                 Screen Drawing
                             </span>
                         </div>
 
-                        <h3 class="font-cute font-bold text-2xl text-cozy-text tracking-tight flex items-center gap-1.5">
+                        <h3 class="card-title">
                             Honeytone
                         </h3>
-                        <p class="text-xs font-medium text-amber-700 mt-1">Draw text & shapes on screen</p>
+                        <p class="card-subtitle sub-honey">Draw text & shapes on screen</p>
 
-                        <p class="text-xs text-cozy-muted mt-3 leading-relaxed">
+                        <p class="card-description">
                             Draw text & shapes directly on macOS screen with easy-to-use tools. Use keyboard shortcut to choose tools and colors.
                         </p>
                     </div>
 
-                    <div class="mt-8 pt-4 border-t border-amber-100/80 flex items-center justify-between">
-                        <button onclick="openModal('honeytone')" class="text-xs font-cute font-semibold text-cozy-muted hover:text-amber-800 transition-colors flex items-center gap-1">
-                            <i data-lucide="sparkles" class="w-3.5 h-3.5 text-amber-500"></i> Peek
+                    <div class="card-footer footer-honey">
+                        <button onclick="openModal('honeytone')" class="peek-btn">
+                            <i data-lucide="sparkles" style="width:0.875rem; height:0.875rem; color:#F59E0B;"></i> Peek
                         </button>
-                        <a href="https://honeytone.pixelegg.me/" target="_blank" rel="noopener" class="px-3.5 py-1.5 rounded-xl bg-amber-500 text-white font-cute font-semibold text-xs hover:bg-amber-600 transition-all shadow-sm flex items-center gap-1 group-hover:scale-105">
+                        <a href="https://honeytone.pixelegg.me/" target="_blank" rel="noopener" class="open-btn btn-honey">
                             <span>Open App</span>
-                            <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+                            <i data-lucide="arrow-up-right" style="width:0.875rem; height:0.875rem;"></i>
                         </a>
                     </div>
                 </article>
 
                 <!-- APP 2: MILESTONE -->
-                <article class="cute-card bg-white rounded-3xl border border-cozy-sageBorder p-6 flex flex-col justify-between shadow-md relative overflow-hidden group">
-                    <div class="absolute -top-12 -right-12 w-28 h-28 bg-emerald-100/60 rounded-full blur-xl pointer-events-none"></div>
+                <article class="cute-card card-sage">
+                    <div class="card-blur-bg"></div>
                     <div>
-                        <div class="flex items-start justify-between mb-4">
-                            <div class="w-12 h-12 rounded-2xl bg-cozy-sage border border-emerald-200 flex items-center justify-center text-emerald-700 shadow-sm">
-                                <i data-lucide="disc" class="w-6 h-6 text-emerald-600"></i>
+                        <div class="card-header">
+                            <div class="app-icon-wrapper icon-sage">
+                                <i data-lucide="disc" style="width:1.5rem; height:1.5rem;"></i>
                             </div>
-                            <span class="text-[11px] font-cute font-bold px-3 py-1 rounded-full bg-emerald-100 text-emerald-800">
+                            <span class="app-category-badge badge-sage">
                                 Practice Player
                             </span>
                         </div>
 
-                        <h3 class="font-cute font-bold text-2xl text-cozy-text tracking-tight flex items-center gap-1.5">
+                        <h3 class="card-title">
                             Milestone
                         </h3>
-                        <p class="text-xs font-medium text-emerald-700 mt-1">Distraction-Free Video Practice</p>
+                        <p class="card-subtitle sub-sage">Distraction-Free Video Practice</p>
 
-                        <p class="text-xs text-cozy-muted mt-3 leading-relaxed">
+                        <p class="card-description">
                             Clean video looper for learning songs and tutorials. Set loop markers, slow down speed without pitch shift, and practice uninterrupted.
                         </p>
                     </div>
 
-                    <div class="mt-8 pt-4 border-t border-emerald-100/80 flex items-center justify-between">
-                        <button onclick="openModal('milestone')" class="text-xs font-cute font-semibold text-cozy-muted hover:text-emerald-800 transition-colors flex items-center gap-1">
-                            <i data-lucide="sparkles" class="w-3.5 h-3.5 text-emerald-500"></i> Peek
+                    <div class="card-footer footer-sage">
+                        <button onclick="openModal('milestone')" class="peek-btn">
+                            <i data-lucide="sparkles" style="width:0.875rem; height:0.875rem; color:#10B981;"></i> Peek
                         </button>
-                        <a href="https://milestone.pixelegg.me/" target="_blank" rel="noopener" class="px-3.5 py-1.5 rounded-xl bg-emerald-600 text-white font-cute font-semibold text-xs hover:bg-emerald-700 transition-all shadow-sm flex items-center gap-1 group-hover:scale-105">
+                        <a href="https://milestone.pixelegg.me/" target="_blank" rel="noopener" class="open-btn btn-sage">
                             <span>Open App</span>
-                            <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+                            <i data-lucide="arrow-up-right" style="width:0.875rem; height:0.875rem;"></i>
                         </a>
                     </div>
                 </article>
 
                 <!-- APP 3: UMBRELLA -->
-                <article class="cute-card bg-white rounded-3xl border border-cozy-skyBorder p-6 flex flex-col justify-between shadow-md relative overflow-hidden group">
-                    <div class="absolute -top-12 -right-12 w-28 h-28 bg-blue-100/60 rounded-full blur-xl pointer-events-none"></div>
+                <article class="cute-card card-sky">
+                    <div class="card-blur-bg"></div>
                     <div>
-                        <div class="flex items-start justify-between mb-4">
-                            <div class="w-12 h-12 rounded-2xl bg-cozy-sky border border-blue-200 flex items-center justify-center text-blue-700 shadow-sm">
-                                <i data-lucide="cloud-rain" class="w-6 h-6 text-blue-600"></i>
+                        <div class="card-header">
+                            <div class="app-icon-wrapper icon-sky">
+                                <i data-lucide="cloud-rain" style="width:1.5rem; height:1.5rem;"></i>
                             </div>
-                            <span class="text-[11px] font-cute font-bold px-3 py-1 rounded-full bg-blue-100 text-blue-800">
+                            <span class="app-category-badge badge-sky">
                                 Audio Capture
                             </span>
                         </div>
 
-                        <h3 class="font-cute font-bold text-2xl text-cozy-text tracking-tight flex items-center gap-1.5">
+                        <h3 class="card-title">
                             Umbrella
                         </h3>
-                        <p class="text-xs font-medium text-blue-700 mt-1">Per-App macOS Audio Capture</p>
+                        <p class="card-subtitle sub-sky">Per-App macOS Audio Capture</p>
 
-                        <p class="text-xs text-cozy-muted mt-3 leading-relaxed">
+                        <p class="card-description">
                             Isolated app audio recording utility. Snag lossless audio straight from any macOS window or application without messy virtual driver setups.
                         </p>
                     </div>
 
-                    <div class="mt-8 pt-4 border-t border-blue-100/80 flex items-center justify-between">
-                        <button onclick="openModal('umbrella')" class="text-xs font-cute font-semibold text-cozy-muted hover:text-blue-800 transition-colors flex items-center gap-1">
-                            <i data-lucide="sparkles" class="w-3.5 h-3.5 text-blue-500"></i> Peek
+                    <div class="card-footer footer-sky">
+                        <button onclick="openModal('umbrella')" class="peek-btn">
+                            <i data-lucide="sparkles" style="width:0.875rem; height:0.875rem; color:#3B82F6;"></i> Peek
                         </button>
-                        <a href="https://umbrella.pixelegg.me/" target="_blank" rel="noopener" class="px-3.5 py-1.5 rounded-xl bg-blue-600 text-white font-cute font-semibold text-xs hover:bg-blue-700 transition-all shadow-sm flex items-center gap-1 group-hover:scale-105">
+                        <a href="https://umbrella.pixelegg.me/" target="_blank" rel="noopener" class="open-btn btn-sky">
                             <span>Open App</span>
-                            <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+                            <i data-lucide="arrow-up-right" style="width:0.875rem; height:0.875rem;"></i>
                         </a>
                     </div>
                 </article>
@@ -320,15 +1112,15 @@
         </section>
 
         <!-- Cozy Manifesto / Craft Banner -->
-        <section id="philosophy" class="max-w-4xl mx-auto px-6 py-12">
-            <div class="bg-white border border-cozy-border rounded-3xl p-8 sm:p-10 shadow-md relative overflow-hidden">
-                <div class="flex flex-col sm:flex-row items-center gap-6">
-                    <div class="w-16 h-16 rounded-2xl bg-amber-100 border border-amber-200 flex-shrink-0 flex items-center justify-center text-amber-800 text-2xl shadow-sm">
+        <section id="philosophy" class="container manifesto-section">
+            <div class="manifesto-card">
+                <div class="manifesto-content">
+                    <div class="manifesto-icon">
                         🌸
                     </div>
-                    <div>
-                        <h3 class="font-cute font-bold text-xl text-cozy-text">Crafted with patience & joy</h3>
-                        <p class="text-xs sm:text-sm text-cozy-muted mt-2 leading-relaxed">
+                    <div class="manifesto-text">
+                        <h3>Crafted with patience & joy</h3>
+                        <p>
                             Software doesn't have to be noisy or overwhelming. Pixel Egg creates friendly, single-purpose utilities built using native Swift frameworks so your Mac stays cool, quiet, and responsive.
                         </p>
                     </div>
@@ -338,26 +1130,26 @@
     </main>
 
     <!-- Cute Footer -->
-    <footer class="border-t border-cozy-border bg-white/70 backdrop-blur-md">
-        <div class="max-w-4xl mx-auto px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-medium text-cozy-muted">
-            <div class="flex items-center gap-2">
-                <span class="text-sm">🐣</span>
+    <footer>
+        <div class="container footer-content">
+            <div class="footer-brand">
+                <span style="font-size:0.875rem;">🐣</span>
                 <span>Handcrafted with warmth &bull; &copy; <span id="year"></span> Pixel Egg</span>
             </div>
 
-            <div class="flex items-center gap-5">
-                <a href="https://honeytone.pixelegg.me/" class="hover:text-amber-700 transition-colors">Honeytone</a>
-                <a href="https://milestone.pixelegg.me/" class="hover:text-emerald-700 transition-colors">Milestone</a>
-                <a href="https://umbrella.pixelegg.me/" class="hover:text-blue-700 transition-colors">Umbrella</a>
+            <div class="footer-links">
+                <a href="https://honeytone.pixelegg.me/">Honeytone</a>
+                <a href="https://milestone.pixelegg.me/">Milestone</a>
+                <a href="https://umbrella.pixelegg.me/">Umbrella</a>
             </div>
         </div>
     </footer>
 
     <!-- Cute App Preview Modal -->
-    <div id="previewModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-stone-900/25 backdrop-blur-sm">
-        <div class="bg-white rounded-3xl border border-cozy-border max-w-md w-full p-6 shadow-2xl relative animate-in fade-in zoom-in-95 duration-200">
-            <button onclick="closeModal()" class="absolute top-4 right-4 text-cozy-muted hover:text-cozy-text p-1.5 rounded-full hover:bg-stone-100 transition-colors">
-                <i data-lucide="x" class="w-5 h-5"></i>
+    <div id="previewModal" class="modal-overlay hidden">
+        <div class="modal-card">
+            <button onclick="closeModal()" class="modal-close-btn">
+                <i data-lucide="x" style="width:1.25rem; height:1.25rem;"></i>
             </button>
             <div id="modalBody">
                 <!-- Injected via JS -->
@@ -407,8 +1199,8 @@
                 title: "Honeytone",
                 url: "https://honeytone.pixelegg.me/",
                 badge: "Screen Drawing",
-                badgeClass: "bg-amber-100 text-amber-800",
-                buttonClass: "bg-amber-500 hover:bg-amber-600",
+                badgeStyle: "background-color: var(--honey-badge-bg); color: var(--honey-badge-text);",
+                buttonStyle: "background-color: var(--honey-accent);",
                 highlights: [
                     "Type text anywhere on your screen in any color",
                     "Provide tools - free Pen, Rectangle, Ellipse, Arrow and Lines",
@@ -420,8 +1212,8 @@
                 title: "Milestone",
                 url: "https://milestone.pixelegg.me/",
                 badge: "Practice Companion",
-                badgeClass: "bg-emerald-100 text-emerald-800",
-                buttonClass: "bg-emerald-600 hover:bg-emerald-700",
+                badgeStyle: "background-color: var(--sage-badge-bg); color: var(--sage-badge-text);",
+                buttonStyle: "background-color: var(--sage-accent);",
                 highlights: [
                     "A/B marker looping for difficult riffs",
                     "Pitch-accurate speed control (25% to 200%)",
@@ -433,8 +1225,8 @@
                 title: "Umbrella",
                 url: "https://umbrella.pixelegg.me/",
                 badge: "System Audio Routing",
-                badgeClass: "bg-blue-100 text-blue-800",
-                buttonClass: "bg-blue-600 hover:bg-blue-700",
+                badgeStyle: "background-color: var(--sky-badge-bg); color: var(--sky-badge-text);",
+                buttonStyle: "background-color: var(--sky-accent);",
                 highlights: [
                     "Per-application audio output capture",
                     "Lossless 24-bit WAV & FLAC export",
@@ -450,28 +1242,28 @@
 
             const modalBody = document.getElementById('modalBody');
             modalBody.innerHTML = `
-                <div class="mb-4">
-                    <span class="text-xs font-cute font-bold px-3 py-1 rounded-full ${app.badgeClass}">${app.badge}</span>
-                    <h3 class="font-cute font-bold text-2xl text-cozy-text mt-2">${app.title}</h3>
+                <div class="modal-header">
+                    <span class="app-category-badge" style="${app.badgeStyle}">${app.badge}</span>
+                    <h3>${app.title}</h3>
                 </div>
 
-                <div class="my-5">
-                    <span class="text-xs font-cute font-bold text-cozy-muted uppercase tracking-wider">Features & Highlights</span>
-                    <ul class="mt-2.5 space-y-2">
+                <div class="modal-section">
+                    <span class="modal-section-title">Features & Highlights</span>
+                    <ul class="modal-highlights">
                         ${app.highlights.map(item => `
-                            <li class="flex items-center gap-2 text-xs font-medium text-cozy-text">
-                                <span class="w-4 h-4 rounded-full bg-stone-100 text-emerald-600 flex items-center justify-center font-bold text-[10px]">✓</span>
+                            <li>
+                                <span class="check-bullet">✓</span>
                                 <span>${item}</span>
                             </li>
-                        `).join('')}
+                        `).map(str => str.trim()).join('')}
                     </ul>
                 </div>
 
-                <div class="pt-4 border-t border-stone-100 flex items-center justify-end gap-2.5">
-                    <button onclick="closeModal()" class="px-4 py-2 rounded-xl text-xs font-cute font-semibold text-cozy-muted hover:bg-stone-100 transition-colors">Close</button>
-                    <a href="${app.url}" target="_blank" rel="noopener" class="px-4 py-2 rounded-xl ${app.buttonClass} text-white text-xs font-cute font-semibold transition-all shadow-sm flex items-center gap-1.5">
+                <div class="modal-footer">
+                    <button onclick="closeModal()" class="modal-cancel-btn">Close</button>
+                    <a href="${app.url}" target="_blank" rel="noopener" class="modal-action-btn" style="${app.buttonStyle}">
                         <span>Visit ${app.title} Site</span>
-                        <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+                        <i data-lucide="arrow-up-right" style="width:0.875rem; height:0.875rem;"></i>
                     </a>
                 </div>
             `;
