@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixel Egg — Cozy & Handcrafted macOS Apps</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts for Cute Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cozy: {
+                            bg: '#FAF7F2',
+                            card: '#FFFFFF',
+                            text: '#2C2A29',
+                            muted: '#7A7571',
+                            border: '#EFEAE1',
+                            honey: '#FFF5E6',
+                            honeyBorder: '#FDE4C3',
+                            honeyAccent: '#D97706',
+                            sage: '#F0F7F4',
+                            sageBorder: '#D2E8DD',
+                            sageAccent: '#059669',
+                            sky: '#F0F5FE',
+                            skyBorder: '#D3E3FD',
+                            skyAccent: '#2563EB',
+                            blush: '#FFF0F3'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', '-apple-system', 'sans-serif'],
+                        cute: ['Fredoka', 'Plus Jakarta Sans', 'sans-serif']
+                    },
+                    boxShadow: {
+                        'cozy': '0 8px 30px rgba(210, 195, 175, 0.15)',
+                        'cozy-hover': '0 16px 40px rgba(180, 160, 135, 0.22)',
+                        'pill': '0 4px 14px rgba(0,0,0,0.03)'
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'float-delayed': 'float 7s ease-in-out 2s infinite',
+                        'wobble': 'wobble 0.8s ease-in-out',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite'
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
+                            '50%': { transform: 'translateY(-10px) rotate(2deg)' }
+                        },
+                        wobble: {
+                            '0%, 100%': { transform: 'rotate(0deg) scale(1)' },
+                            '15%': { transform: 'rotate(-12deg) scale(1.08)' },
+                            '30%': { transform: 'rotate(10deg) scale(1.08)' },
+                            '45%': { transform: 'rotate(-6deg) scale(1.04)' },
+                            '60%': { transform: 'rotate(4deg) scale(1.02)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            background-color: #FAF7F2;
+            background-image: radial-gradient(#E8E2D8 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+        
+        .cute-card {
+            transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        
+        .cute-card:hover {
+            transform: translateY(-8px) rotate(-0.5deg);
+        }
+
+        .sticker-badge {
+            transition: transform 0.2s ease;
+        }
+
+        .sticker-badge:hover {
+            transform: scale(1.1) rotate(3deg);
+        }
+
+        .glass-nav {
+            background: rgba(250, 247, 242, 0.85);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+        }
+    </style>
+</head>
+<body class="text-cozy-text font-sans antialiased selection:bg-amber-100 selection:text-amber-900 min-h-screen flex flex-col justify-between relative overflow-x-hidden">
+
+    <!-- Ambient Cute Floating Background Blobs -->
+    <div class="fixed top-12 left-[-60px] w-72 h-72 bg-amber-200/30 rounded-full blur-3xl pointer-events-none animate-float"></div>
+    <div class="fixed top-96 right-[-80px] w-96 h-96 bg-emerald-200/25 rounded-full blur-3xl pointer-events-none animate-float-delayed"></div>
+    <div class="fixed bottom-20 left-1/3 w-80 h-80 bg-blue-200/20 rounded-full blur-3xl pointer-events-none animate-float"></div>
+
+    <!-- Navigation Header -->
+    <header class="sticky top-0 z-40 w-full glass-nav border-b border-cozy-border/70">
+        <div class="max-w-4xl mx-auto px-6 h-18 flex items-center justify-between">
+            <!-- Studio Brand -->
+            <a href="#" class="flex items-center gap-3 group py-3">
+                <div class="w-10 h-10 rounded-2xl bg-amber-400/20 border border-amber-300/50 flex items-center justify-center text-amber-700 shadow-sm transition-transform group-hover:scale-110 group-hover:rotate-6">
+                    <!-- Egg Icon -->
+                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none">
+                        <ellipse cx="12" cy="13" rx="7" ry="8.5" fill="#FDE68A" stroke="#D97706" stroke-width="2"/>
+                        <circle cx="10" cy="11.5" r="1" fill="#78350F" />
+                        <circle cx="14" cy="11.5" r="1" fill="#78350F" />
+                        <path d="M11 14.5 Q12 15.5 13 14.5" stroke="#78350F" stroke-width="1.5" stroke-linecap="round"/>
+                        <ellipse cx="9" cy="13" rx="1" ry="0.6" fill="#F87171" opacity="0.6"/>
+                        <ellipse cx="15" cy="13" rx="1" ry="0.6" fill="#F87171" opacity="0.6"/>
+                    </svg>
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-cute font-bold text-lg tracking-tight text-cozy-text leading-tight">Pixel Egg</span>
+                    <span class="text-[10px] font-mono text-cozy-muted uppercase tracking-wider">Indie App Studio</span>
+                </div>
+            </a>
+
+            <!-- Navigation Links -->
+            <nav class="flex items-center gap-5 text-sm font-medium">
+                <a href="#apps" class="text-cozy-muted hover:text-cozy-text transition-colors">Apps</a>
+                <a href="#philosophy" class="text-cozy-muted hover:text-cozy-text transition-colors">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="flex-grow">
+        <!-- Cute Hero Section -->
+        <section class="max-w-4xl mx-auto px-6 pt-16 pb-16 text-center relative">
+            
+            <!-- Interactive Cute Pixel Egg Mascot -->
+            <div class="inline-block relative cursor-pointer mb-6 group" onclick="wobbleEgg()" title="Click me for a smile! 🐣">
+                <div id="eggContainer" class="w-28 h-28 sm:w-32 sm:h-32 mx-auto relative transition-transform duration-300">
+                    <!-- SVG Mascot -->
+                    <svg viewBox="0 0 100 120" class="w-full h-full filter drop-shadow-md">
+                        <!-- Shadow -->
+                        <ellipse cx="50" cy="112" rx="32" ry="6" fill="#E5DEC9" />
+                        <!-- Egg Body -->
+                        <path d="M50 10 C25 10 15 50 15 75 C15 95 30 105 50 105 C70 105 85 95 85 75 C85 50 75 10 50 10 Z" fill="#FFFDF9" stroke="#E5DBC9" stroke-width="4" />
+                        <!-- Yolk Pattern / Soft Belly Patch -->
+                        <ellipse cx="50" cy="80" rx="22" ry="16" fill="#FEF3C7" opacity="0.6"/>
+                        <!-- Cute Eyes -->
+                        <g id="eggEyes">
+                            <circle cx="40" cy="55" r="4" fill="#2C2A29" />
+                            <circle cx="60" cy="55" r="4" fill="#2C2A29" />
+                            <circle cx="41.5" cy="53.5" r="1.5" fill="#FFFFFF" />
+                            <circle cx="61.5" cy="53.5" r="1.5" fill="#FFFFFF" />
+                        </g>
+                        <!-- Cute Mouth (Swappable via JS) -->
+                        <path id="eggMouth" d="M45 66 Q50 71 55 66" stroke="#2C2A29" stroke-width="3" stroke-linecap="round" fill="none"/>
+                        <!-- Rosy Cheeks -->
+                        <ellipse cx="33" cy="62" rx="4" ry="2.5" fill="#FCA5A5" opacity="0.75" />
+                        <ellipse cx="67" cy="62" rx="4" ry="2.5" fill="#FCA5A5" opacity="0.75" />
+                        <!-- Little Sparkle -->
+                        <path d="M72 30 L74 34 L78 36 L74 38 L72 42 L70 38 L66 36 L70 34 Z" fill="#F59E0B"/>
+                    </svg>
+                </div>
+                <!-- Speech Bubble on Mascot -->
+                <div id="eggSpeech" class="absolute -top-3 -right-6 bg-white px-3 py-1 rounded-full border border-cozy-border text-[11px] font-cute font-semibold text-amber-800 shadow-pill opacity-90 transition-all duration-300">
+                    Click me! 🐣
+                </div>
+            </div>
+
+            <!-- Freshly Baked Badge -->
+            <div class="flex items-center justify-center gap-2 mb-4">
+                <span class="px-4 py-1.5 rounded-full bg-white border border-amber-200/80 text-xs font-cute font-semibold text-amber-800 shadow-pill flex items-center gap-1.5">
+                    <span>✨ Handcrafted for macOS</span>
+                    <span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-ping"></span>
+                </span>
+            </div>
+
+            <!-- Hero Title -->
+            <h1 class="text-4xl sm:text-5xl font-cute font-bold tracking-tight text-cozy-text max-w-2xl mx-auto leading-tight">
+                Cozy, distraction-free desktop software.
+            </h1>
+
+            <!-- Hero Subtitle -->
+            <p class="mt-4 text-base sm:text-lg text-cozy-muted max-w-xl mx-auto font-medium leading-relaxed">
+                Small, dedicated utilities crafted with care for music practice, warm sound design, and clean audio capture.
+            </p>
+
+            <!-- Cute Feature Stickers Row -->
+            <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
+                <span class="sticker-badge px-3 py-1 rounded-xl bg-amber-50 border border-amber-200/60 text-xs font-cute font-medium text-amber-900 shadow-sm flex items-center gap-1.5">
+                    <span>🧸 Soft & Minimal</span>
+                </span>
+                <span class="sticker-badge px-3 py-1 rounded-xl bg-emerald-50 border border-emerald-200/60 text-xs font-cute font-medium text-emerald-900 shadow-sm flex items-center gap-1.5">
+                    <span> Silicon & Intel Macs</span>
+                </span>
+                <span class="sticker-badge px-3 py-1 rounded-xl bg-blue-50 border border-blue-200/60 text-xs font-cute font-medium text-blue-900 shadow-sm flex items-center gap-1.5">
+                    <span>⚡️ Zero Trackers</span>
+                </span>
+            </div>
+        </section>
+
+        <!-- Cute Apps Showcase Section -->
+        <section id="apps" class="max-w-4xl mx-auto px-6 py-8">
+            <div class="flex items-center justify-between mb-8 pb-3 border-b border-cozy-border">
+                <div class="flex items-center gap-2">
+                    <span class="text-xl">🥞</span>
+                    <h2 class="font-cute font-bold text-xl tracking-tight text-cozy-text">The App Suite</h2>
+                </div>
+                <span class="text-xs font-mono font-medium text-cozy-muted bg-white px-3 py-1 rounded-full border border-cozy-border">3 Indie Utilities</span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+                <!-- APP 1: HONEYTONE -->
+                <article class="cute-card bg-white rounded-3xl border border-cozy-honeyBorder p-6 flex flex-col justify-between shadow-cozy relative overflow-hidden group">
+                    <div class="absolute -top-12 -right-12 w-28 h-28 bg-amber-100/60 rounded-full blur-xl pointer-events-none"></div>
+                    <div>
+                        <!-- Header & Icon -->
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="w-13 h-13 rounded-2xl bg-cozy-honey border border-amber-200 flex items-center justify-center text-amber-700 shadow-sm">
+                                <i data-lucide="sun" class="w-7 h-7 text-amber-600"></i>
+                            </div>
+                            <span class="text-[11px] font-cute font-bold px-3 py-1 rounded-full bg-amber-100 text-amber-800">
+                                Screen Drawing
+                            </span>
+                        </div>
+
+                        <!-- App Title -->
+                        <h3 class="font-cute font-bold text-2xl text-cozy-text tracking-tight flex items-center gap-1.5">
+                            Honeytone
+                        </h3>
+                        <p class="text-xs font-medium text-amber-700 mt-1">Draw text & shapes on screen</p>
+
+                        <!-- Description -->
+                        <p class="text-xs text-cozy-muted mt-3 leading-relaxed">
+                          Draw text & shapes directly on macOS screen with easy-to-use tools. Use keyboard shortcut to choose tools and colors.
+                        </p>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="mt-8 pt-4 border-t border-amber-100/80 flex items-center justify-between">
+                        <button onclick="openModal('honeytone')" class="text-xs font-cute font-semibold text-cozy-muted hover:text-amber-800 transition-colors flex items-center gap-1">
+                            <i data-lucide="sparkles" class="w-3.5 h-3.5 text-amber-500"></i> Peek
+                        </button>
+                        <a href="https://honeytone.pixelegg.me/" target="_blank" rel="noopener" class="px-3.5 py-1.5 rounded-xl bg-amber-500 text-white font-cute font-semibold text-xs hover:bg-amber-600 transition-all shadow-sm flex items-center gap-1 group-hover:scale-105">
+                            <span>Open App</span>
+                            <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+                        </a>
+                    </div>
+                </article>
+
+                <!-- APP 2: MILESTONE -->
+                <article class="cute-card bg-white rounded-3xl border border-cozy-sageBorder p-6 flex flex-col justify-between shadow-cozy relative overflow-hidden group">
+                    <div class="absolute -top-12 -right-12 w-28 h-28 bg-emerald-100/60 rounded-full blur-xl pointer-events-none"></div>
+                    <div>
+                        <!-- Header & Icon -->
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="w-13 h-13 rounded-2xl bg-cozy-sage border border-emerald-200 flex items-center justify-center text-emerald-700 shadow-sm">
+                                <i data-lucide="disc" class="w-7 h-7 text-emerald-600"></i>
+                            </div>
+                            <span class="text-[11px] font-cute font-bold px-3 py-1 rounded-full bg-emerald-100 text-emerald-800">
+                                Practice Player
+                            </span>
+                        </div>
+
+                        <!-- App Title -->
+                        <h3 class="font-cute font-bold text-2xl text-cozy-text tracking-tight flex items-center gap-1.5">
+                            Milestone
+                        </h3>
+                        <p class="text-xs font-medium text-emerald-700 mt-1">Distraction-Free Video Practice</p>
+
+                        <!-- Description -->
+                        <p class="text-xs text-cozy-muted mt-3 leading-relaxed">
+                            Clean video looper for learning songs and tutorials. Set loop markers, slow down speed without pitch shift, and practice uninterrupted.
+                        </p>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="mt-8 pt-4 border-t border-emerald-100/80 flex items-center justify-between">
+                        <button onclick="openModal('milestone')" class="text-xs font-cute font-semibold text-cozy-muted hover:text-emerald-800 transition-colors flex items-center gap-1">
+                            <i data-lucide="sparkles" class="w-3.5 h-3.5 text-emerald-500"></i> Peek
+                        </button>
+                        <a href="https://milestone.pixelegg.me/" target="_blank" rel="noopener" class="px-3.5 py-1.5 rounded-xl bg-emerald-600 text-white font-cute font-semibold text-xs hover:bg-emerald-700 transition-all shadow-sm flex items-center gap-1 group-hover:scale-105">
+                            <span>Open App</span>
+                            <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+                        </a>
+                    </div>
+                </article>
+
+                <!-- APP 3: UMBRELLA -->
+                <article class="cute-card bg-white rounded-3xl border border-cozy-skyBorder p-6 flex flex-col justify-between shadow-cozy relative overflow-hidden group">
+                    <div class="absolute -top-12 -right-12 w-28 h-28 bg-blue-100/60 rounded-full blur-xl pointer-events-none"></div>
+                    <div>
+                        <!-- Header & Icon -->
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="w-13 h-13 rounded-2xl bg-cozy-sky border border-blue-200 flex items-center justify-center text-blue-700 shadow-sm">
+                                <i data-lucide="cloud-rain" class="w-7 h-7 text-blue-600"></i>
+                            </div>
+                            <span class="text-[11px] font-cute font-bold px-3 py-1 rounded-full bg-blue-100 text-blue-800">
+                                Audio Capture
+                            </span>
+                        </div>
+
+                        <!-- App Title -->
+                        <h3 class="font-cute font-bold text-2xl text-cozy-text tracking-tight flex items-center gap-1.5">
+                            Umbrella
+                        </h3>
+                        <p class="text-xs font-medium text-blue-700 mt-1">Per-App macOS Audio Capture</p>
+
+                        <!-- Description -->
+                        <p class="text-xs text-cozy-muted mt-3 leading-relaxed">
+                            Isolated app audio recording utility. Snag lossless audio straight from any macOS window or application without messy virtual driver setups.
+                        </p>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="mt-8 pt-4 border-t border-blue-100/80 flex items-center justify-between">
+                        <button onclick="openModal('umbrella')" class="text-xs font-cute font-semibold text-cozy-muted hover:text-blue-800 transition-colors flex items-center gap-1">
+                            <i data-lucide="sparkles" class="w-3.5 h-3.5 text-blue-500"></i> Peek
+                        </button>
+                        <a href="https://umbrella.pixelegg.me/" target="_blank" rel="noopener" class="px-3.5 py-1.5 rounded-xl bg-blue-600 text-white font-cute font-semibold text-xs hover:bg-blue-700 transition-all shadow-sm flex items-center gap-1 group-hover:scale-105">
+                            <span>Open App</span>
+                            <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+                        </a>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- Cozy Manifesto / Craft Banner -->
+        <section id="philosophy" class="max-w-4xl mx-auto px-6 py-12">
+            <div class="bg-white border border-cozy-border rounded-3xl p-8 sm:p-10 shadow-cozy relative overflow-hidden">
+                <div class="flex flex-col sm:flex-row items-center gap-6">
+                    <div class="w-16 h-16 rounded-2xl bg-amber-100 border border-amber-200 flex-shrink-0 flex items-center justify-center text-amber-800 text-2xl shadow-sm">
+                        🌸
+                    </div>
+                    <div>
+                        <h3 class="font-cute font-bold text-xl text-cozy-text">Crafted with patience & joy</h3>
+                        <p class="text-xs sm:text-sm text-cozy-muted mt-2 leading-relaxed">
+                            Software doesn't have to be noisy or overwhelming. Pixel Egg creates friendly, single-purpose utilities built using native Swift frameworks so your Mac stays cool, quiet, and responsive.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Cute Footer -->
+    <footer class="border-t border-cozy-border bg-white/70 backdrop-blur-md">
+        <div class="max-w-4xl mx-auto px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-medium text-cozy-muted">
+            <div class="flex items-center gap-2">
+                <span class="text-sm">🐣</span>
+                <span>Handcrafted with warmth &bull; &copy; <span id="year"></span> Pixel Egg</span>
+            </div>
+
+            <div class="flex items-center gap-5">
+                <a href="https://honeytone.pixelegg.me/" class="hover:text-amber-700 transition-colors">Honeytone</a>
+                <a href="https://milestone.pixelegg.me/" class="hover:text-emerald-700 transition-colors">Milestone</a>
+                <a href="https://umbrella.pixelegg.me/" class="hover:text-blue-700 transition-colors">Umbrella</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cute App Preview Modal -->
+    <div id="previewModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-stone-900/25 backdrop-blur-sm">
+        <div class="bg-white rounded-3xl border border-cozy-border max-w-md w-full p-6 shadow-2xl relative animate-in fade-in zoom-in-95 duration-200">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-cozy-muted hover:text-cozy-text p-1.5 rounded-full hover:bg-stone-100 transition-colors">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+            <div id="modalBody">
+                <!-- Injected via JS -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+        lucide.createIcons();
+
+        // Interactive Mascot Wobble & Expression Switcher
+        const phrases = [
+            "Hello friend! 🐣",
+            "Ready to craft? 🎨",
+            "Cozy desktop vibes! ☕️",
+            "Made with love! 💖",
+            "Squeak squeak! 🐥"
+        ];
+        
+        let phraseIdx = 0;
+
+        function wobbleEgg() {
+            const container = document.getElementById('eggContainer');
+            const speech = document.getElementById('eggSpeech');
+            const mouth = document.getElementById('eggMouth');
+
+            // Trigger CSS animation
+            container.classList.remove('animate-wobble');
+            void container.offsetWidth; // re-trigger reflow
+            container.classList.add('animate-wobble');
+
+            // Change expression to happy open mouth temporarily
+            mouth.setAttribute('d', 'M44 65 Q50 75 56 65 Z');
+            mouth.setAttribute('fill', '#2C2A29');
+
+            // Cycle speech phrase
+            phraseIdx = (phraseIdx + 1) % phrases.length;
+            speech.textContent = phrases[phraseIdx];
+            speech.classList.add('scale-110');
+
+            setTimeout(() => {
+                mouth.setAttribute('d', 'M45 66 Q50 71 55 66');
+                mouth.setAttribute('fill', 'none');
+                speech.classList.remove('scale-110');
+            }, 600);
+        }
+
+        // App Details Data
+        const apps = {
+            honeytone: {
+                title: "Honeytone",
+                url: "https://honeytone.pixelegg.me/",
+                badge: "Screen Drawing",
+                badgeClass: "bg-amber-100 text-amber-800",
+                buttonClass: "bg-amber-500 hover:bg-amber-600",
+                highlights: [
+                    "Type text anywhere on your screen in any color",
+                    "Provide tools - fee Pen, Rectangle, Ellipse, Arrow and Lines",
+                    "Toggle your screen into whiteboard or blackboard",
+                    "30 color palettes"
+                ]
+            },
+            milestone: {
+                title: "Milestone",
+                url: "https://milestone.pixelegg.me/",
+                badge: "Practice Companion",
+                badgeClass: "bg-emerald-100 text-emerald-800",
+                buttonClass: "bg-emerald-600 hover:bg-emerald-700",
+                highlights: [
+                    "A/B marker looping for difficult riffs",
+                    "Pitch-accurate speed control (25% to 200%)",
+                    "Keyboard shortcuts designed for musicians",
+                    "Distraction-free focus mode"
+                ]
+            },
+            umbrella: {
+                title: "Umbrella",
+                url: "https://umbrella.pixelegg.me/",
+                badge: "System Audio Routing",
+                badgeClass: "bg-blue-100 text-blue-800",
+                buttonClass: "bg-blue-600 hover:bg-blue-700",
+                highlights: [
+                    "Per-application audio output capture",
+                    "Lossless 24-bit WAV & FLAC export",
+                    "Native CoreAudio driver-less architecture",
+                    "Clean, minimal window control"
+                ]
+            }
+        };
+
+        function openModal(key) {
+            const app = apps[key];
+            if (!app) return;
+
+            const modalBody = document.getElementById('modalBody');
+            modalBody.innerHTML = `
+                <div class="mb-4">
+                    <span class="text-xs font-cute font-bold px-3 py-1 rounded-full ${app.badgeClass}">${app.badge}</span>
+                    <h3 class="font-cute font-bold text-2xl text-cozy-text mt-2">${app.title}</h3>
+                </div>
+
+                <div class="my-5">
+                    <span class="text-xs font-cute font-bold text-cozy-muted uppercase tracking-wider">Features & Highlights</span>
+                    <ul class="mt-2.5 space-y-2">
+                        ${app.highlights.map(item => `
+                            <li class="flex items-center gap-2 text-xs font-medium text-cozy-text">
+                                <span class="w-4 h-4 rounded-full bg-stone-100 text-emerald-600 flex items-center justify-center font-bold text-[10px]">✓</span>
+                                <span>${item}</span>
+                            </li>
+                        `).join('')}
+                    </ul>
+                </div>
+
+                <div class="pt-4 border-t border-stone-100 flex items-center justify-end gap-2.5">
+                    <button onclick="closeModal()" class="px-4 py-2 rounded-xl text-xs font-cute font-semibold text-cozy-muted hover:bg-stone-100 transition-colors">Close</button>
+                    <a href="${app.url}" target="_blank" rel="noopener" class="px-4 py-2 rounded-xl ${app.buttonClass} text-white text-xs font-cute font-semibold transition-all shadow-sm flex items-center gap-1.5">
+                        <span>Visit ${app.title} Site</span>
+                        <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+                    </a>
+                </div>
+            `;
+
+            lucide.createIcons();
+            document.getElementById('previewModal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('previewModal').classList.add('hidden');
+        }
+
+        window.onclick = function(e) {
+            const modal = document.getElementById('previewModal');
+            if (e.target === modal) closeModal();
+        };
+    </script>
+</body>
+</html>
