@@ -477,6 +477,16 @@
             box-shadow: 0 1px 2px rgba(0,0,0,0.05);
         }
 
+        /* Ensure Lucide and inline SVGs size correctly across iOS / desktop */
+        .app-icon-wrapper svg,
+        .brand-icon svg,
+        i[data-lucide] {
+            width: 1.5rem;
+            height: 1.5rem;
+            display: inline-block;
+            flex-shrink: 0;
+        }
+
         .icon-honey { background-color: var(--honey-bg); border: 1px solid #FDE68A; color: var(--honey-accent); }
         .icon-sage { background-color: var(--sage-bg); border: 1px solid #A7F3D0; color: var(--sage-accent); }
         .icon-sky { background-color: var(--sky-bg); border: 1px solid #BFDBFE; color: var(--sky-accent); }
@@ -902,7 +912,7 @@
             <a href="#" class="brand-link">
                 <div class="brand-icon">
                     <!-- Egg Icon -->
-                    <svg style="width:1.5rem; height:1.5rem;" viewBox="0 0 24 24" fill="none">
+                    <svg viewBox="0 0 24 24" fill="none">
                         <ellipse cx="12" cy="13" rx="7" ry="8.5" fill="#FDE68A" stroke="#D97706" stroke-width="2"/>
                         <circle cx="10" cy="11.5" r="1" fill="#78350F" />
                         <circle cx="14" cy="11.5" r="1" fill="#78350F" />
@@ -1012,7 +1022,7 @@
                     <div>
                         <div class="card-header">
                             <div class="app-icon-wrapper icon-honey">
-                                <i data-lucide="sun" style="width:1.5rem; height:1.5rem;"></i>
+                                <i data-lucide="sun"></i>
                             </div>
                             <span class="app-category-badge badge-honey">
                                 Screen Drawing
@@ -1031,11 +1041,11 @@
 
                     <div class="card-footer footer-honey">
                         <button onclick="openModal('honeytone')" class="peek-btn">
-                            <i data-lucide="sparkles" style="width:0.875rem; height:0.875rem; color:#F59E0B;"></i> Peek
+                            <i data-lucide="sparkles" style="color:#F59E0B;"></i> Peek
                         </button>
                         <a href="https://honeytone.pixelegg.me/" target="_blank" rel="noopener" class="open-btn btn-honey">
                             <span>Open App</span>
-                            <i data-lucide="arrow-up-right" style="width:0.875rem; height:0.875rem;"></i>
+                            <i data-lucide="arrow-up-right"></i>
                         </a>
                     </div>
                 </article>
@@ -1046,30 +1056,30 @@
                     <div>
                         <div class="card-header">
                             <div class="app-icon-wrapper icon-sage">
-                                <i data-lucide="disc" style="width:1.5rem; height:1.5rem;"></i>
+                                <i data-lucide="music"></i>
                             </div>
                             <span class="app-category-badge badge-sage">
-                                Practice Player
+                                Music Practice
                             </span>
                         </div>
 
                         <h3 class="card-title">
                             Milestone
                         </h3>
-                        <p class="card-subtitle sub-sage">Distraction-Free Video Practice</p>
+                        <p class="card-subtitle sub-sage">Distraction-free YouTube loop player</p>
 
                         <p class="card-description">
-                            Clean video looper for learning songs and tutorials. Set loop markers, slow down speed without pitch shift, and practice uninterrupted.
+                            Practice your instrument with custom timestamp markers, seamless looping, and a cozy interface designed for focus.
                         </p>
                     </div>
 
                     <div class="card-footer footer-sage">
                         <button onclick="openModal('milestone')" class="peek-btn">
-                            <i data-lucide="sparkles" style="width:0.875rem; height:0.875rem; color:#10B981;"></i> Peek
+                            <i data-lucide="sparkles" style="color:#059669;"></i> Peek
                         </button>
                         <a href="https://milestone.pixelegg.me/" target="_blank" rel="noopener" class="open-btn btn-sage">
                             <span>Open App</span>
-                            <i data-lucide="arrow-up-right" style="width:0.875rem; height:0.875rem;"></i>
+                            <i data-lucide="arrow-up-right"></i>
                         </a>
                     </div>
                 </article>
@@ -1080,30 +1090,30 @@
                     <div>
                         <div class="card-header">
                             <div class="app-icon-wrapper icon-sky">
-                                <i data-lucide="cloud-rain" style="width:1.5rem; height:1.5rem;"></i>
+                                <i data-lucide="mic"></i>
                             </div>
                             <span class="app-category-badge badge-sky">
-                                Audio Capture
+                                Audio Recording
                             </span>
                         </div>
 
                         <h3 class="card-title">
                             Umbrella
                         </h3>
-                        <p class="card-subtitle sub-sky">Per-App macOS Audio Capture</p>
+                        <p class="card-subtitle sub-sky">Per-application audio capture</p>
 
                         <p class="card-description">
-                            Isolated app audio recording utility. Snag lossless audio straight from any macOS window or application without messy virtual driver setups.
+                            Capture crystal-clear internal audio directly from specific apps like Spotify, Safari, or Zoom into clean MP3/AAC files.
                         </p>
                     </div>
 
                     <div class="card-footer footer-sky">
                         <button onclick="openModal('umbrella')" class="peek-btn">
-                            <i data-lucide="sparkles" style="width:0.875rem; height:0.875rem; color:#3B82F6;"></i> Peek
+                            <i data-lucide="sparkles" style="color:#2563EB;"></i> Peek
                         </button>
                         <a href="https://umbrella.pixelegg.me/" target="_blank" rel="noopener" class="open-btn btn-sky">
                             <span>Open App</span>
-                            <i data-lucide="arrow-up-right" style="width:0.875rem; height:0.875rem;"></i>
+                            <i data-lucide="arrow-up-right"></i>
                         </a>
                     </div>
                 </article>
@@ -1111,17 +1121,17 @@
             </div>
         </section>
 
-        <!-- Cozy Manifesto / Craft Banner -->
+        <!-- Manifesto Banner Section -->
         <section id="philosophy" class="container manifesto-section">
             <div class="manifesto-card">
                 <div class="manifesto-content">
                     <div class="manifesto-icon">
-                        🌸
+                        <i data-lucide="heart"></i>
                     </div>
                     <div class="manifesto-text">
-                        <h3>Crafted with patience & joy</h3>
+                        <h3>Built for Humans, Not Metrics</h3>
                         <p>
-                            Software doesn't have to be noisy or overwhelming. Pixel Egg creates friendly, single-purpose utilities built using native Swift frameworks so your Mac stays cool, quiet, and responsive.
+                            Every app from Pixel Egg is engineered with native macOS APIs, guaranteeing blazing-fast performance, zero background telemetry, and a cozy aesthetic that feels right at home on your Mac.
                         </p>
                     </div>
                 </div>
@@ -1129,157 +1139,157 @@
         </section>
     </main>
 
-    <!-- Cute Footer -->
+    <!-- Footer -->
     <footer>
         <div class="container footer-content">
             <div class="footer-brand">
-                <span style="font-size:0.875rem;">🐣</span>
-                <span>Handcrafted with warmth &bull; &copy; <span id="year"></span> Pixel Egg</span>
+                <span style="font-size: 1rem;">🥚</span>
+                <span>© 2026 Pixel Egg Studio. All rights reserved.</span>
             </div>
-
             <div class="footer-links">
-                <a href="https://honeytone.pixelegg.me/">Honeytone</a>
-                <a href="https://milestone.pixelegg.me/">Milestone</a>
-                <a href="https://umbrella.pixelegg.me/">Umbrella</a>
+                <a href="https://github.com/orklann" target="_blank" rel="noopener">GitHub</a>
+                <a href="mailto:threcius@zoho.com">Contact</a>
             </div>
         </div>
     </footer>
 
-    <!-- Cute App Preview Modal -->
-    <div id="previewModal" class="modal-overlay hidden">
+    <!-- App Preview Modal -->
+    <div id="appModal" class="modal-overlay hidden" onclick="closeModalOnBg(event)">
         <div class="modal-card">
             <button onclick="closeModal()" class="modal-close-btn">
                 <i data-lucide="x" style="width:1.25rem; height:1.25rem;"></i>
             </button>
-            <div id="modalBody">
-                <!-- Injected via JS -->
+            <div class="modal-header">
+                <span id="modalBadge" class="app-category-badge">Category</span>
+                <h3 id="modalTitle">App Title</h3>
+            </div>
+            <p id="modalDesc" class="card-description" style="font-size: 0.875rem;"></p>
+            <div class="modal-section">
+                <span class="modal-section-title">Key Highlights</span>
+                <ul id="modalHighlights" class="modal-highlights">
+                    <!-- Dynamic bullets inserted via JS -->
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button onclick="closeModal()" class="modal-cancel-btn">Close</button>
+                <a id="modalLink" href="#" target="_blank" rel="noopener" class="modal-action-btn btn-honey">
+                    <span>Visit Website</span>
+                    <i data-lucide="arrow-up-right" style="width:1rem; height:1rem;"></i>
+                </a>
             </div>
         </div>
     </div>
 
+    <!-- Interactive Scripts -->
     <script>
-        document.getElementById('year').textContent = new Date().getFullYear();
-        lucide.createIcons();
+        // Ensure Lucide icons initialize reliably across iOS and desktop browsers once DOM is parsed
+        document.addEventListener("DOMContentLoaded", function() {
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+        });
 
-        const phrases = [
-            "Hello friend! 🐣",
-            "Ready to craft? 🎨",
-            "Cozy desktop vibes! ☕️",
-            "Made with love! 💖",
-            "Squeak squeak! 🐥"
-        ];
-        
-        let phraseIdx = 0;
-
+        // Mascot Wobble Animation
         function wobbleEgg() {
             const container = document.getElementById('eggContainer');
             const speech = document.getElementById('eggSpeech');
             const mouth = document.getElementById('eggMouth');
 
-            container.classList.remove('animate-wobble');
-            void container.offsetWidth;
             container.classList.add('animate-wobble');
-
-            mouth.setAttribute('d', 'M44 65 Q50 75 56 65 Z');
-            mouth.setAttribute('fill', '#2C2A29');
-
-            phraseIdx = (phraseIdx + 1) % phrases.length;
-            speech.textContent = phrases[phraseIdx];
             speech.classList.add('scale-110');
+            
+            // Smile change
+            mouth.setAttribute('d', 'M40 63 Q50 74 60 63');
+            speech.textContent = "Yay! Cozy vibes! 🐣✨";
 
             setTimeout(() => {
-                mouth.setAttribute('d', 'M45 66 Q50 71 55 66');
-                mouth.setAttribute('fill', 'none');
+                container.classList.remove('animate-wobble');
                 speech.classList.remove('scale-110');
-            }, 600);
+                mouth.setAttribute('d', 'M45 66 Q50 71 55 66');
+                speech.textContent = "Click me! 🐣";
+            }, 800);
         }
 
-        const apps = {
+        // App Data for Modal Previews
+        const appData = {
             honeytone: {
                 title: "Honeytone",
-                url: "https://honeytone.pixelegg.me/",
-                badge: "Screen Drawing",
-                badgeStyle: "background-color: var(--honey-badge-bg); color: var(--honey-badge-text);",
-                buttonStyle: "background-color: var(--honey-accent);",
+                category: "Screen Drawing",
+                badgeClass: "badge-honey",
+                btnClass: "btn-honey",
+                desc: "Draw text & shapes directly on your macOS screen with easy-to-use tools. Perfect for presentations, tutorials, and highlighting important areas.",
                 highlights: [
-                    "Type text anywhere on your screen in any color",
-                    "Provide tools - free Pen, Rectangle, Ellipse, Arrow and Lines",
-                    "Toggle your screen into whiteboard or blackboard",
-                    "30 color palettes"
-                ]
+                    "Global keyboard shortcuts for instant activation",
+                    "Customizable colors and brush strokes",
+                    "Lightweight native menu bar utility"
+                ],
+                link: "https://honeytone.pixelegg.me/"
             },
             milestone: {
                 title: "Milestone",
-                url: "https://milestone.pixelegg.me/",
-                badge: "Practice Companion",
-                badgeStyle: "background-color: var(--sage-badge-bg); color: var(--sage-badge-text);",
-                buttonStyle: "background-color: var(--sage-accent);",
+                category: "Music Practice",
+                badgeClass: "badge-sage",
+                btnClass: "btn-sage",
+                desc: "A distraction-free YouTube video player application designed specifically for music learning and technical study with custom timestamp markers and looping controls.",
                 highlights: [
-                    "A/B marker looping for difficult riffs",
-                    "Pitch-accurate speed control (25% to 200%)",
-                    "Keyboard shortcuts designed for musicians",
-                    "Distraction-free focus mode"
-                ]
+                    "A-B seamless loop markers for tricky solos",
+                    "Custom timestamp notes and bookmarks",
+                    "Distraction-free cozy interface"
+                ],
+                link: "https://milestone.pixelegg.me/"
             },
             umbrella: {
                 title: "Umbrella",
-                url: "https://umbrella.pixelegg.me/",
-                badge: "System Audio Routing",
-                badgeStyle: "background-color: var(--sky-badge-bg); color: var(--sky-badge-text);",
-                buttonStyle: "background-color: var(--sky-accent);",
+                category: "Audio Recording",
+                badgeClass: "badge-sky",
+                btnClass: "btn-sky",
+                desc: "A native macOS per-application audio recording utility that leverages modern CoreAudio process taps to capture content from specific apps directly into clean audio files.",
                 highlights: [
-                    "Per-application audio output capture",
-                    "Lossless 24-bit WAV & FLAC export",
-                    "Native CoreAudio driver-less architecture",
-                    "Clean, minimal window control"
-                ]
+                    "Per-application audio isolation (Spotify, Zoom, Safari)",
+                    "Direct MP3 and AAC exports with no virtual audio cable needed",
+                    "Low CPU footprint with native Swift/Crystal architecture"
+                ],
+                link: "https://umbrella.pixelegg.me/"
             }
         };
 
-        function openModal(key) {
-            const app = apps[key];
+        // Modal Controllers
+        function openModal(appName) {
+            const app = appData[appName];
             if (!app) return;
 
-            const modalBody = document.getElementById('modalBody');
-            modalBody.innerHTML = `
-                <div class="modal-header">
-                    <span class="app-category-badge" style="${app.badgeStyle}">${app.badge}</span>
-                    <h3>${app.title}</h3>
-                </div>
+            document.getElementById('modalTitle').textContent = app.title;
+            
+            const badge = document.getElementById('modalBadge');
+            badge.textContent = app.category;
+            badge.className = `app-category-badge ${app.badgeClass}`;
 
-                <div class="modal-section">
-                    <span class="modal-section-title">Features & Highlights</span>
-                    <ul class="modal-highlights">
-                        ${app.highlights.map(item => `
-                            <li>
-                                <span class="check-bullet">✓</span>
-                                <span>${item}</span>
-                            </li>
-                        `).map(str => str.trim()).join('')}
-                    </ul>
-                </div>
+            document.getElementById('modalDesc').textContent = app.desc;
 
-                <div class="modal-footer">
-                    <button onclick="closeModal()" class="modal-cancel-btn">Close</button>
-                    <a href="${app.url}" target="_blank" rel="noopener" class="modal-action-btn" style="${app.buttonStyle}">
-                        <span>Visit ${app.title} Site</span>
-                        <i data-lucide="arrow-up-right" style="width:0.875rem; height:0.875rem;"></i>
-                    </a>
-                </div>
-            `;
+            const highlightsList = document.getElementById('modalHighlights');
+            highlightsList.innerHTML = '';
+            app.highlights.forEach(h => {
+                const li = document.createElement('li');
+                li.innerHTML = `<span class="check-bullet">✓</span><span>${h}</span>`;
+                highlightsList.appendChild(li);
+            });
 
-            lucide.createIcons();
-            document.getElementById('previewModal').classList.remove('hidden');
+            const actionBtn = document.getElementById('modalLink');
+            actionBtn.href = app.link;
+            actionBtn.className = `modal-action-btn ${app.btnClass}`;
+
+            document.getElementById('appModal').classList.remove('hidden');
         }
 
         function closeModal() {
-            document.getElementById('previewModal').classList.add('hidden');
+            document.getElementById('appModal').classList.add('hidden');
         }
 
-        window.onclick = function(e) {
-            const modal = document.getElementById('previewModal');
-            if (e.target === modal) closeModal();
-        };
+        function closeModalOnBg(event) {
+            if (event.target.id === 'appModal') {
+                closeModal();
+            }
+        }
     </script>
 </body>
 </html>
